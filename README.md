@@ -8,4 +8,5 @@ Gabriel Cavalcanti
 
 
 # MySQL
-- Para rodar, utilizar: docker compose up -d e depois rodar a aplicação spring boot e tudo deve funcionar normalmente.
+- Rode o comando no terminal: docker compose up -d no root do projeto.
+- Depois, incie a aplicação spring boot normalmente e tudo deve ta funcionando, com o banco de dados sendo criado e as tabelas.
