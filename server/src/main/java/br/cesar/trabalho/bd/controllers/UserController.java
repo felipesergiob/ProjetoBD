@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.cesar.trabalho.bd.dtos.CreateUserDTO;
+import br.cesar.trabalho.bd.dtos.LoginDTO;
 import br.cesar.trabalho.bd.entities.User;
 import br.cesar.trabalho.bd.repositories.UserRepository;
-
 
 @RestController
 @RequestMapping("users")
@@ -21,12 +21,12 @@ public class UserController {
   private UserRepository userRepository;
 
   @GetMapping()
-  public List<User> findUsers() {
+  public List<User> findAll() {
     return userRepository.findAllUsers();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Object> findUser(@PathVariable Integer id) {
+  public ResponseEntity<Object> findById(@PathVariable Integer id) {
     Optional<User> user = userRepository.findUserById(id);
 
     if (user.isEmpty()) {
@@ -37,10 +37,25 @@ public class UserController {
   }
 
   @PostMapping()
-  public ResponseEntity<CreateUserDTO> post(@RequestBody CreateUserDTO userDto) {
+  public ResponseEntity<CreateUserDTO> create(@RequestBody CreateUserDTO userDto) {
     userRepository.create(userDto);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
+  }
+
+  @PostMapping("/sessions")
+  public ResponseEntity<Object> sessions(@RequestBody LoginDTO loginDTO) {
+    Optional<User> user = userRepository.findByEmail(loginDTO.getEmail());
+
+    if (user.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Credenciais inválidas");
+    }
+
+    if (!user.get().getPassword().equals(loginDTO.getPassword())) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+    }
+
+    return ResponseEntity.status(HttpStatus.OK).body(user.get().getId());
   }
 
   @DeleteMapping("/{id}")

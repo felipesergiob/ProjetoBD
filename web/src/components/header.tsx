@@ -1,56 +1,58 @@
-import { Button } from './ui/button'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, X } from 'lucide-react'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger
-} from './ui/drawer'
+import { LogOut, ShoppingCart } from 'lucide-react'
+
+import { useAuth } from '@/hooks/use-auth'
+
+import { Button } from './ui/button'
+import { Drawer, DrawerTrigger } from './ui/drawer'
+import { Cart } from './cart'
 
 export function Header() {
+  const [isCartOpen, setIsCartOpen] = useState(false)
+
+  const { signOut, userId } = useAuth()
+
   return (
-    <Drawer direction="right">
+    <Drawer open={isCartOpen} onOpenChange={setIsCartOpen} direction="right">
       <header className="p-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <h1>Nome</h1>
+          <Link className="font-bold text-xl" to="/">
+            Logo
+          </Link>
 
           <nav className="flex items-center gap-2">
             <Button size="sm" variant="ghost" asChild>
-              <Link to="/">Produtos</Link>
+              <Link to="/products">Produtos</Link>
             </Button>
             <Button size="sm" variant="ghost" asChild>
-              <Link to="/">Pedidos</Link>
+              <Link to="/orders">Pedidos</Link>
+            </Button>
+            <Button size="sm" variant="ghost" asChild>
+              <Link to="/favorites">Favoritos</Link>
             </Button>
           </nav>
 
-          <DrawerTrigger asChild>
-            <Button size="sm">
-              <ShoppingCart className="w-4 h-4" />
+          {userId ? (
+            <div className="space-x-2">
+              <Button onClick={signOut}>
+                <LogOut className="w-4 h-4" />
+              </Button>
+              <DrawerTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <ShoppingCart className="w-4 h-4" />
+                </Button>
+              </DrawerTrigger>
+            </div>
+          ) : (
+            <Button asChild>
+              <Link to="/login">Entrar</Link>
             </Button>
-          </DrawerTrigger>
+          )}
         </div>
       </header>
 
-      <DrawerContent className="h-screen top-0 right-0 left-auto mt-0 w-[400px] rounded-none">
-        <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader className="relative">
-            <DrawerTitle>Carrinho</DrawerTitle>
-            <DrawerDescription>
-              Visualize todos os itens no seu carrinho.
-            </DrawerDescription>
-
-            <DrawerClose asChild className="absolute top-3 right-3">
-              <Button variant="outline" size="sm">
-                <X className="w-4 h-4" />
-              </Button>
-            </DrawerClose>
-          </DrawerHeader>
-        </div>
-      </DrawerContent>
+      <Cart onOpenCart={setIsCartOpen} />
     </Drawer>
   )
 }

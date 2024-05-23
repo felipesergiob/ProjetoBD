@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  postgres:
+  mysql:
     container_name: trabalho-bd
     image: mysql:latest
     ports:

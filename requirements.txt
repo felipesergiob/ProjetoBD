@@ -1,0 +1,26 @@
+Obrigatório:
+- Composto: OK
+- Multivalorado: (?)
+- Cardinalidade diversas: OK
+- Atributo de relacionamento: OK
+- Auto relacionamento: (?)
+- Agregação ou ternário: OK
+- Entidade fraca: OK -> onDelete: Cascade
+- Herança: OK
+
+Extra:
+- Check: 
+- Default: OK
+- Unique:
+
+Dúvidas:
+
+É necessário ter features de SQL avançada no projeto? Sim, TRIGGER
+Na parte de gerar relatórios (SELECT), é preciso ter quais features de SQL? Sim, Dashboard
+Em todas as entidades/tabelas é preciso ter select, update, insert e delete? Como funciona isso? Não, só se fazer sentido
+Como fazer a representação da entidade fraca e auto relacionamento?
+
+Features novas:
+- Mostrar endereço do usuário na tela de checkout
+- Dashboard simples
+- Finalizar favoritos

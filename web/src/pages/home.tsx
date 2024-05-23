@@ -1,77 +1,72 @@
-import { Header } from '@/components/header'
 import { Section } from '@/components/section'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
-import { faker } from '@faker-js/faker'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useProducts } from '@/hooks/use-products'
+import { ProductSkeleton } from '@/components/product-skeleton'
+import { useCategories } from '@/hooks/use-categories'
+import { ProductCard } from '@/components/product-card'
 
 export function Home() {
-  const products = Array.from({ length: 10 }).map(() => ({
-    id: faker.string.uuid(),
-    title: faker.commerce.productName(),
-    price: faker.commerce.price(),
-    description: faker.commerce.productDescription(),
-    imageUrl: faker.image.urlPicsumPhotos()
-  }))
+  const { data: categories } = useCategories()
+  const { data: products } = useProducts()
 
   return (
-    <div>
-      <Header />
-
+    <>
       <div className="bg-primary h-[600px] w-full"></div>
 
-      <div className="max-w-6xl mx-auto px-4 my-24 flex flex-col gap-32">
+      <div className="max-w-6xl mx-auto px-4 my-24 flex flex-col gap-24">
         <Section title="Categorias">
           <div className="grid grid-cols-4 gap-8">
-            <div className="border border-border p-4 rounded-md flex flex-col gap-4">
-              <h3 className="font-semibold text-lg">Sapatos</h3>
-              <p className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Debitis iure nulla quasi.
-              </p>
-              <Button size="sm" asChild>
-                <Link to="/">Ver mais</Link>
-              </Button>
-            </div>
+            {!categories
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <div
+                    key={index + 'skeleton'}
+                    className="border border-border p-4 rounded-md flex flex-col gap-4"
+                  >
+                    <Skeleton className="h-6 w-full" />
+                    <Skeleton className="h-16 w-full" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+                ))
+              : categories.map(category => (
+                  <div
+                    key={category.id}
+                    className="border border-border p-4 rounded-md flex flex-col gap-4"
+                  >
+                    <h3 className="font-semibold text-lg">{category.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {category.description}
+                    </p>
+                    <Button size="sm" asChild>
+                      <Link to={`/products?categoryId=${category.id}`}>
+                        Ver mais
+                      </Link>
+                    </Button>
+                  </div>
+                ))}
           </div>
         </Section>
 
-        <Section title="Produtos">
+        <Section href="/products" title="Produtos">
           <div className="grid grid-cols-3 gap-8">
-            {products.map(product => (
-              <div
-                key={product.id}
-                className="border border-border rounded-md overflow-hidden"
-              >
-                <img
-                  src={product.imageUrl}
-                  alt={product.title}
-                  className="w-full h-48"
-                />
-                <div className="p-4 flex flex-col gap-4">
-                  <h3 className="text-lg font-semibold">{product.title}</h3>
-                  <span className="text-sm text-muted-foreground">
-                    {product.description}
-                  </span>
-
-                  <strong>R$ {product.price}</strong>
-
-                  <Button>Adicionar ao carrinho</Button>
-                </div>
-              </div>
-            ))}
-            {/* <div className="border border-border p-4 rounded-md flex flex-col gap-4">
-              <h3 className="font-semibold text-lg">Sapatos</h3>
-              <p className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Debitis iure nulla quasi.
-              </p>
-              <Button size="sm" asChild>
-                <Link to="/">Ver mais</Link>
-              </Button>
-            </div> */}
+            {!products
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <ProductSkeleton key={index + 'skeleton' + 'product'} />
+                ))
+              : products.map(product => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    description={product.description}
+                    images={product.images}
+                    name={product.name}
+                    price={product.price}
+                  />
+                ))}
           </div>
         </Section>
       </div>
-    </div>
+    </>
   )
 }

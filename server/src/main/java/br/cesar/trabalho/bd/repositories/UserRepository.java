@@ -50,6 +50,21 @@ public class UserRepository {
 
     return users.isEmpty() ? Optional.empty() : Optional.of(users.get(0));
   }
+
+  public Optional<User> findByEmail(String email) {
+    String sql = "SELECT * FROM users WHERE email = ?";
+
+    List<User> users = jdbcTemplate.query(new PreparedStatementCreator() {
+      @Override
+      public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, email);
+        return preparedStatement;
+      }
+    }, new UserRowMapper());
+
+    return users.isEmpty() ? Optional.empty() : Optional.of(users.get(0));
+  }
   
   private static class UserRowMapper implements RowMapper<User> {
     @Override

@@ -1,0 +1,11 @@
+USE trabalho_bd;
+
+SET FOREIGN_KEY_CHECKS = 0; 
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS products_images; 
+DROP TABLE IF EXISTS users_address;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS orders_items;
+SET FOREIGN_KEY_CHECKS = 1; 
