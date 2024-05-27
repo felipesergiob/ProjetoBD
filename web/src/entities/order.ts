@@ -2,7 +2,7 @@ export interface IOrder {
   id: number
   userId: number
   total: number
-  created_at: string
+  createdAt: string
   ordersItems: {
     id: number
     productId: number

@@ -32,7 +32,11 @@ type FormInput = z.infer<typeof signInFormSchema>
 export function Login() {
   const navigate = useNavigate()
   const form = useForm<FormInput>({
-    resolver: zodResolver(signInFormSchema)
+    resolver: zodResolver(signInFormSchema),
+    defaultValues: {
+      email: '',
+      password: ''
+    }
   })
 
   const { signIn } = useAuth()
@@ -46,7 +50,10 @@ export function Login() {
 
       toast.success('Login realizado com sucesso.')
 
-      signIn(data)
+      signIn({
+        userId: data.id,
+        role: data.role
+      })
 
       navigate('/')
     } catch (error) {

@@ -1,15 +1,20 @@
+export type UserInfo = {
+  userId: number
+  role: string
+}
+
 export const storage = {
-  setUserId: (userId: number) => {
-    window.localStorage.setItem('projetobd:userId', String(userId))
+  setUserInfo: (userInfo: UserInfo) => {
+    window.localStorage.setItem('projetobd:userInfo', JSON.stringify(userInfo))
   },
 
-  getUserId: () => {
-    const userId = window.localStorage.getItem('projetobd:userId')
+  getUserInfo: (): UserInfo | null => {
+    const userInfo = window.localStorage.getItem('projetobd:userInfo')
 
-    return userId ? Number(userId) : null
+    return userInfo ? JSON.parse(userInfo) : null
   },
 
-  clearUserId: () => {
-    window.localStorage.removeItem('projetobd:userId')
+  clearUserInfo: () => {
+    window.localStorage.removeItem('projetobd:userInfo')
   }
 }

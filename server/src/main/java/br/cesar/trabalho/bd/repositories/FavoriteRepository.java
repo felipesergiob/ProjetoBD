@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,7 +75,7 @@ public class FavoriteRepository {
     }
   }
 
-    private static class ProductRowMapper implements RowMapper<Product> {
+  private static class ProductRowMapper implements RowMapper<Product> {
     @Override
     public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
         Product product = new Product();

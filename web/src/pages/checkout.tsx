@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -14,12 +14,14 @@ import { Form } from '@/components/ui/form'
 import { OrderInformation } from '@/components/order-information'
 import { api } from '@/lib/axios'
 import { useAuth } from '@/hooks/use-auth'
+import { useAddress } from '@/hooks/use-address'
+import { useNavigate } from 'react-router-dom'
 
 const createOrderFormSchema = z.object({
   street: z.string().min(1, {
     message: 'Rua é obrigatório.'
   }),
-  neigbourhood: z.string().min(1, {
+  neighbourhood: z.string().min(1, {
     message: 'Bairro é obrigatório.'
   }),
   number: z.string().min(1, {
@@ -28,19 +30,12 @@ const createOrderFormSchema = z.object({
   cep: z.string().min(1, {
     message: 'CEP é obrigatório.'
   }),
-  complement: z.string().min(1, {
-    message: 'Complemento é obrigatório.'
-  }),
   city: z.string().min(1, {
     message: 'Cidade é obrigatório.'
-  }),
-  country: z.string().min(1, {
-    message: 'País é obrigatório.'
   }),
   state: z.string().min(1, {
     message: 'Estado é obrigatório.'
   }),
-
   cardNumber: z.string().min(19, {
     message: 'Número do cartão é obrigatório.'
   }),
@@ -58,14 +53,13 @@ const createOrderFormSchema = z.object({
 export type FormInput = z.infer<typeof createOrderFormSchema>
 
 export function Checkout() {
+  const navigate = useNavigate()
   const form = useForm<FormInput>({
     resolver: zodResolver(createOrderFormSchema),
     defaultValues: {
       cep: '',
       city: '',
-      complement: '',
-      country: '',
-      neigbourhood: '',
+      neighbourhood: '',
       number: '',
       state: '',
       street: ''
@@ -73,9 +67,22 @@ export function Checkout() {
   })
 
   const cart = useCart(state => state.cart)
-  const { userId } = useAuth()
+  const clearCart = useCart(state => state.clearCart)
+  const { userInfo } = useAuth()
 
   const { data: products } = useProducts()
+  const { data: address } = useAddress(userInfo?.userId)
+
+  useEffect(() => {
+    if (address) {
+      form.setValue('cep', address.cep)
+      form.setValue('city', address.city)
+      form.setValue('neighbourhood', address.neighbourhood)
+      form.setValue('state', address.state)
+      form.setValue('number', address.number.toString())
+      form.setValue('street', address.street)
+    }
+  }, [address, form])
 
   if (!products) {
     return <span>Carregando...</span>
@@ -88,12 +95,24 @@ export function Checkout() {
   }, 0)
 
   async function onSubmit(values: FormInput) {
+    if (!userInfo) {
+      return
+    }
+
     try {
       await api.post('/orders', {
         ...values,
-        orderItems: cart,
-        userId
+        number: Number(values.number),
+        orderItems: cart.map(item => ({
+          ...item,
+          userId: userInfo.userId
+        })),
+        userId: userInfo.userId
       })
+
+      navigate('/orders')
+      toast.success('Pedido criado com sucesso!')
+      clearCart()
     } catch (error) {
       toast.error('Ocorreu um erro.', {
         description: 'Tente novamente mais tarde.'

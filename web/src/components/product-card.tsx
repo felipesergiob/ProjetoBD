@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
+import { Heart } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { formatMoney } from '@/utils/format'
 
 import { Button } from './ui/button'
 import { useCart } from '@/hooks/use-cart'
-import { Heart } from 'lucide-react'
 import { useAuth } from '@/hooks/use-auth'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/axios'
+import { useFavorites } from '@/hooks/use-favorites'
 
 type ProductCardProps = {
   id: number
@@ -26,33 +27,54 @@ export function ProductCard({
   images
 }: ProductCardProps) {
   const addItemToCart = useCart(state => state.addItemToCart)
-  const { userId } = useAuth()
+  const { userInfo } = useAuth()
+  const queryClient = useQueryClient()
+  const { data: products } = useFavorites()
+
+  const favorites = products ? products.map(item => item.id) : []
 
   const favoriteProductMutation = useMutation({
     mutationFn: async () => {
       return api.post('/favorites', {
-        userId,
+        userId: userInfo?.userId,
         productId: id
       })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['favorites', userInfo?.userId]
+      })
+
+      toast.success(`Produto ${name} favoritado com sucesso`)
     }
   })
 
   return (
     <div className="rounded-md overflow-hidden">
-      <Link to={`/products/${id}`} className="group">
-        <div className="relative w-full h-96">
+      <Link
+        onClick={event => event.preventDefault()}
+        to={`/products/${id}`}
+        className="group"
+      >
+        <div className="relative z-50 w-full h-96">
           <img
             src={images[0]}
             alt={name}
             className="w-full h-96 group-hover:opacity-60 transition-all absolute"
           />
           <Button
-            onClick={favoriteProductMutation.mutateAsync}
+            onClick={() => {
+              favoriteProductMutation.mutateAsync()
+            }}
             size="sm"
             variant="outline"
-            className="absolute top-4 right-4"
+            className="absolute top-4 right-4 z-50"
           >
-            <Heart className="w-4 h-4" />
+            {favorites.includes(id) ? (
+              <Heart className="w-4 h-4 fill-red-500 text-red-500" />
+            ) : (
+              <Heart className="w-4 h-4" />
+            )}
           </Button>
         </div>
         <div className="flex justify-between items-start mt-2">

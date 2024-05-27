@@ -5,8 +5,10 @@ Obrigatório:
 - Atributo de relacionamento: OK
 - Auto relacionamento: (?)
 - Agregação ou ternário: OK
-- Entidade fraca: OK -> onDelete: Cascade
+- Entidade fraca: OK
 - Herança: OK
+
+- SQL Avançado: PROCEDURE (não da para executar dentro do data.sql, tem que ser executado após) - OK
 
 Extra:
 - Check: 
@@ -21,6 +23,7 @@ Em todas as entidades/tabelas é preciso ter select, update, insert e delete? Co
 Como fazer a representação da entidade fraca e auto relacionamento?
 
 Features novas:
-- Mostrar endereço do usuário na tela de checkout
-- Dashboard simples
-- Finalizar favoritos
+- Mostrar/Criar endereço do usuário na tela de checkout: OK
+- Dashboard simples (pedidos no mes, total no mes): OK
+- Finalizar favoritos: OK
+- Mostrar produtos mais recentes e produtos mais comprados (tela inicial): FALSE

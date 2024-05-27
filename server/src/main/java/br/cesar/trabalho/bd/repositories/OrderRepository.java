@@ -27,40 +27,42 @@ public class OrderRepository {
   public List<Order> findAll() {
     String sql = """
       SELECT 
-        orders.id,
-        orders.total,
-        orders.user_id,
-        orders.created_at,
+        oi.order_id as id,
+        o.total,
+        o.created_at,
         JSON_ARRAYAGG(
-            JSON_OBJECT(
-                'id', orders_items.id,
-                'product_id', orders_items.product_id,
-                'quantity', orders_items.quantity
-            )
-          ) AS order_items
+          JSON_OBJECT(
+            'id', oi.id,
+            'product_id', oi.product_id,
+            'quantity', oi.quantity
+          )
+        ) AS items
       FROM 
-          orders
-      INNER JOIN 
-          orders_items ON orders_items.order_id = orders.id
+        orders_items oi
+      JOIN 
+        orders o ON oi.order_id = o.id
+      WHERE 
+        oi.user_id = 1
       GROUP BY 
-          orders.id;
+        oi.order_id, o.total
+      ORDER BY 
+        oi.order_id;
     """;
 
     return jdbcTemplate.query(sql, (rs, rowNum) -> {
         Order order = new Order();
         order.setTotal(rs.getBigDecimal("total"));
-        order.setUserId(rs.getInt("user_id"));
         order.setId(rs.getInt("id"));
-        order.setCreated_at(rs.getTimestamp("created_at"));
+        order.setCreatedAt(rs.getTimestamp("created_at"));
 
         JSONArray jsonArray = new JSONArray(rs.getString("order_items"));
 
         List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-        for (int i=0; i<jsonArray.length(); i++) {
-            System.out.println();
+        for (int i = 0; i < jsonArray.length(); i++) {
             Integer productId = (Integer)jsonArray.getJSONObject(i).get("product_id");
             Integer quantity = (Integer)jsonArray.getJSONObject(i).get("quantity");
+            Integer userId = (Integer)jsonArray.getJSONObject(i).get("user_id");
             Integer id = (Integer)jsonArray.getJSONObject(i).get("id");
 
             OrderItem orderItem = new OrderItem();
@@ -68,6 +70,7 @@ public class OrderRepository {
             orderItem.setOrderId(order.getId());
             orderItem.setProductId(productId);
             orderItem.setQuantity(quantity);
+            orderItem.setUserId(userId);
             
             orderItems.add(orderItem);
         }   
@@ -79,7 +82,7 @@ public class OrderRepository {
   }
 
   public Integer create(Integer userId, BigDecimal total) {
-    String sql = "INSERT INTO orders (total, user_id) VALUES (?, ?)";
+    String sql = "INSERT INTO orders (total) VALUES (?)";
 
     GeneratedKeyHolder holder = new GeneratedKeyHolder();
     jdbcTemplate.update(new PreparedStatementCreator() {
@@ -87,7 +90,6 @@ public class OrderRepository {
         public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
             PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setBigDecimal(1, total);
-            statement.setInt(2, userId);
             return statement;
         }
     }, holder);

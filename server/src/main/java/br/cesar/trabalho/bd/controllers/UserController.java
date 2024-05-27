@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.cesar.trabalho.bd.dtos.CreateUserDTO;
 import br.cesar.trabalho.bd.dtos.LoginDTO;
+import br.cesar.trabalho.bd.dtos.LoginResponseDTO;
 import br.cesar.trabalho.bd.entities.User;
 import br.cesar.trabalho.bd.repositories.UserRepository;
 
@@ -55,7 +56,12 @@ public class UserController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
     }
 
-    return ResponseEntity.status(HttpStatus.OK).body(user.get().getId());
+    LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+
+    loginResponseDTO.setId(user.get().getId());
+    loginResponseDTO.setRole(user.get().getRole());
+
+    return ResponseEntity.status(HttpStatus.OK).body(loginResponseDTO);
   }
 
   @DeleteMapping("/{id}")

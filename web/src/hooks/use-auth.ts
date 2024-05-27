@@ -1,26 +1,26 @@
-import { storage } from '@/lib/storage'
+import { UserInfo, storage } from '@/lib/storage'
 import { useEffect, useState } from 'react'
 
 export function useAuth() {
-  const [userId, setUserId] = useState<number | null>(null)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
 
   useEffect(() => {
-    setUserId(storage.getUserId())
+    setUserInfo(storage.getUserInfo())
   }, [])
 
   function signOut() {
-    setUserId(null)
-    storage.clearUserId()
+    setUserInfo(null)
+    storage.clearUserInfo()
   }
 
-  function signIn(userId: number) {
-    setUserId(userId)
-    storage.setUserId(userId)
+  function signIn(userInfo: UserInfo) {
+    setUserInfo(userInfo)
+    storage.setUserInfo(userInfo)
   }
 
   return {
     signOut,
     signIn,
-    userId
+    userInfo
   }
 }

@@ -9,10 +9,12 @@ type UseCart = {
   cart: ICart[]
   addItemToCart: (productId: number) => void
   removeItemFromCart: (productId: number) => void
+  clearCart: () => void
 }
 
 export const useCart = create<UseCart>()(set => ({
   cart: [],
+  clearCart: () => set({ cart: [] }),
   addItemToCart: (productId: number) =>
     set(state => {
       const productExists = state.cart.findIndex(
@@ -58,8 +60,6 @@ export const useCart = create<UseCart>()(set => ({
           )
         }
       }
-
-      return {}
     })
 
   // addItemToCart: (productId: string) =>

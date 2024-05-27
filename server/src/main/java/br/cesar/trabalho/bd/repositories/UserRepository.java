@@ -31,6 +31,7 @@ public class UserRepository {
       user.setPassword(rs.getString("password"));
       user.setEmail(rs.getString("email"));
       user.setId(rs.getInt("id"));
+      user.setRole(rs.getString("role"));
 
       return user;
     });
@@ -74,6 +75,7 @@ public class UserRepository {
         user.setName(rs.getString("name"));
         user.setEmail(rs.getString("email"));
         user.setPassword(rs.getString("password"));
+        user.setRole(rs.getString("role"));
         return user;
     }
   }

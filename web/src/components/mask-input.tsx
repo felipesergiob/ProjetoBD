@@ -1,12 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactInputMask, { Props } from 'react-input-mask'
 
 import { cn } from '@/lib/utils'
+import { forwardRef } from 'react'
 
 type MaskInputProps = {
   mask: string
 } & Props
 
-export function MaskInput({ mask, className, ...props }: MaskInputProps) {
+function MaskInputBase(
+  { mask, className, ...props }: MaskInputProps,
+  ref: any
+) {
   return (
     <ReactInputMask
       className={cn(
@@ -14,8 +19,10 @@ export function MaskInput({ mask, className, ...props }: MaskInputProps) {
         className
       )}
       mask={mask}
-      maskChar=""
+      ref={ref}
       {...props}
     />
   )
 }
+
+export const MaskInput = forwardRef(MaskInputBase)

@@ -38,7 +38,7 @@ export function OrderInformation({ control }: OrderInformationProps) {
             />
             <FormField
               control={control}
-              name="neigbourhood"
+              name="neighbourhood"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Bairro</FormLabel>
@@ -50,26 +50,13 @@ export function OrderInformation({ control }: OrderInformationProps) {
               )}
             />
           </div>
-          <div className="grid grid-cols-[1fr_2fr_2fr] gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <FormField
               control={control}
               name="number"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Número</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="complement"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Complemento</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -91,7 +78,7 @@ export function OrderInformation({ control }: OrderInformationProps) {
               )}
             />
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <FormField
               control={control}
               name="city"
@@ -111,19 +98,6 @@ export function OrderInformation({ control }: OrderInformationProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Estado</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>País</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

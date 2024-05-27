@@ -7,6 +7,8 @@ import { Checkout } from './pages/checkout'
 import { Login } from './pages/login'
 import { Orders } from './pages/orders'
 import { Favorites } from './pages/favorites'
+import { Dashboard } from './pages/dashboard'
+import { ProductActions } from './pages/product-actions'
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ export const router = createBrowserRouter([
       {
         path: '/favorites',
         element: <Favorites />
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard />
+      },
+      {
+        path: '/product-actions',
+        element: <ProductActions />
       }
     ]
   },

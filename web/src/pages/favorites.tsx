@@ -1,21 +1,9 @@
 import { ProductCard } from '@/components/product-card'
 import { ProductSkeleton } from '@/components/product-skeleton'
-import { IProduct } from '@/entities/product'
-import { useAuth } from '@/hooks/use-auth'
-import { api } from '@/lib/axios'
-import { useQuery } from '@tanstack/react-query'
+import { useFavorites } from '@/hooks/use-favorites'
 
 export function Favorites() {
-  const { userId } = useAuth()
-
-  const { data: products } = useQuery({
-    queryKey: ['favorites', userId],
-    queryFn: async () => {
-      const { data } = await api.get<IProduct[]>(`/favorites/${userId}`)
-
-      return data
-    }
-  })
+  const { data: products } = useFavorites()
 
   return (
     <div className="max-w-6xl mx-auto px-4 my-8 flex flex-col gap-24">

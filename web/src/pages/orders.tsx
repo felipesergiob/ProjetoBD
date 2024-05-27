@@ -9,16 +9,16 @@ import { Link } from 'react-router-dom'
 import { Fragment } from 'react/jsx-runtime'
 
 export function Orders() {
-  const { userId } = useAuth()
+  const { userInfo } = useAuth()
 
   const { data: orders } = useQuery({
-    queryKey: ['orders', userId],
+    queryKey: ['orders', userInfo?.userId],
     queryFn: async () => {
-      const { data } = await api.get<IOrder[]>(`/orders/${userId}`)
+      const { data } = await api.get<IOrder[]>(`/orders/${userInfo?.userId}`)
 
       return data
     },
-    enabled: !!userId
+    enabled: !!userInfo?.userId
   })
 
   const { data: products } = useProducts()
@@ -50,7 +50,7 @@ export function Orders() {
               <div className="flex flex-col gap-2">
                 <span className="">Data de Criação</span>
                 <small className="text-sm text-muted-foreground">
-                  {new Date(order.created_at).toLocaleDateString('pt-BR')}
+                  {new Date(order.createdAt).toLocaleDateString('pt-BR')}
                 </small>
               </div>
               <div className="flex flex-col gap-2">

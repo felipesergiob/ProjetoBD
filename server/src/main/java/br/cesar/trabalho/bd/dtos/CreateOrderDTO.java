@@ -7,13 +7,12 @@ import lombok.Data;
 @Data
 public class CreateOrderDTO {
   private String street;
-  private String number;
+  private Integer number;
   private String complement;
   private String neighbourhood;
   private String cep;
   private String city;
   private String state;
-  private String country;
 
   private Integer userId;
 

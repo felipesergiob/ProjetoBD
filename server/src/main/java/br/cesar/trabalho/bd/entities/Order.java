@@ -11,7 +11,7 @@ public class Order {
   private Integer id;
   private Integer userId;
   private BigDecimal total;
-  private Timestamp created_at;
+  private Timestamp createdAt;
 
   List<OrderItem> ordersItems;
 }

@@ -11,7 +11,9 @@ import { Cart } from './cart'
 export function Header() {
   const [isCartOpen, setIsCartOpen] = useState(false)
 
-  const { signOut, userId } = useAuth()
+  const { signOut, userInfo } = useAuth()
+
+  console.log({ userInfo })
 
   return (
     <Drawer open={isCartOpen} onOpenChange={setIsCartOpen} direction="right">
@@ -25,15 +27,25 @@ export function Header() {
             <Button size="sm" variant="ghost" asChild>
               <Link to="/products">Produtos</Link>
             </Button>
-            <Button size="sm" variant="ghost" asChild>
-              <Link to="/orders">Pedidos</Link>
-            </Button>
-            <Button size="sm" variant="ghost" asChild>
-              <Link to="/favorites">Favoritos</Link>
-            </Button>
+            {userInfo && (
+              <>
+                <Button size="sm" variant="ghost" asChild>
+                  <Link to="/orders">Pedidos</Link>
+                </Button>
+                <Button size="sm" variant="ghost" asChild>
+                  <Link to="/favorites">Favoritos</Link>
+                </Button>
+
+                {userInfo.role === 'ADMIN' && (
+                  <Button size="sm" variant="ghost" asChild>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </Button>
+                )}
+              </>
+            )}
           </nav>
 
-          {userId ? (
+          {userInfo ? (
             <div className="space-x-2">
               <Button onClick={signOut}>
                 <LogOut className="w-4 h-4" />
