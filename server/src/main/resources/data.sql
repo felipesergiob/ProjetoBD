@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS orders_items;
 DROP TABLE IF EXISTS favorites;
 DROP TABLE IF EXISTS products_colors;
+DROP TABLE IF EXISTS related_products;
 SET FOREIGN_KEY_CHECKS = 1; 
 
 CREATE TABLE users (
@@ -86,11 +87,11 @@ CREATE TABLE favorites (
 );
 
 CREATE TABLE related_products (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    product_id INT,
-    related_product_id INT,
-    FOREIGN KEY (product_id) REFERENCES products(id),
-    FOREIGN KEY (related_product_id) REFERENCES products(id)
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  product_id INT,
+  related_product_id INT,
+  FOREIGN KEY (product_id) REFERENCES products(id),
+  FOREIGN KEY (related_product_id) REFERENCES products(id)
 );
 
 INSERT INTO users (name, password, email, role) VALUES
@@ -98,30 +99,25 @@ INSERT INTO users (name, password, email, role) VALUES
 ('Gabriel', 'teste123', 'gabriel@gmail.com', 'USER'),
 ('Pepe', 'teste123', 'pepe@gmail.com', 'ADMIN');
 
--- INSERT INTO categories (name, description) VALUES 
--- ('Calças', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus a velit nemo odit ab dolorum adipisci amet.'),
--- ('Camisas', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus a velit nemo odit ab dolorum adipisci amet.'),
--- ('Jaquetas', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus a velit nemo odit ab dolorum adipisci amet.');
-
 INSERT INTO categories (name, description) VALUES 
-('Camisa', 'Camisas de várias cores e estilos para diversas ocasiões, confeccionadas com materiais de alta qualidade.'),
-('Calça', 'Calças confortáveis e elegantes para o dia a dia, proporcionando um visual leve e moderno'),
-('Vestido', 'Vestidos elegantes e casuais para todas as ocasiões. É a escolha perfeita para quem busca sofisticação e conforto em uma única peça..'),
-('Sapato', 'Sapatos variados, desde casuais até formais. É a combinação perfeita de elegância, conforto e durabilidade..');
+('Camisa', 'Camisas de varias cores e estilos para diversas ocasioes, confeccionadas com materiais de alta qualidade.'),
+('Calca', 'Calcas confortaveis e elegantes para o dia a dia, proporcionando um visual leve e moderno'),
+('Vestido', 'Vestidos elegantes e casuais para todas as ocasioes. E a escolha perfeita para quem busca sofisticacao e conforto em uma unica peca.'),
+('Sapato', 'Sapatos variados, desde casuais ate formais. E a combinacao perfeita de elegancia, conforto e durabilidade.');
 
 INSERT INTO products (name, description, price, category_id) VALUES
-('Camisa Polo Azul', 'Camisa polo azul de alta qualidade, confeccionada em algodão premium, ideal para um look casual e elegante.', 79.99, 1),
-('Calça Jeans', 'Calça jeans confortável e resistente, com corte moderno e detalhes em lavagem clara, perfeita para o dia a dia.', 129.99, 2),
-('Vestido Florido', 'Vestido florido ideal para o verão, feito de tecido leve e arejado, proporcionando conforto e estilo.', 149.99, 3),
-('Sapato Social Preto', 'Sapato social preto, ideal para eventos formais, confeccionado em couro legítimo com acabamento refinado.', 249.99, 4),
-('Camisa Social Branca', 'Camisa social branca para o trabalho, feita em tecido de algodão de alta qualidade, oferecendo conforto e sofisticação.', 99.99, 1),
-('Calça de Sarja', 'Calça de sarja para um look casual, com ajuste perfeito e tecido durável, disponível em várias cores.', 119.99, 2),
-('Vestido de Festa', 'Vestido de festa deslumbrante, com detalhes em renda e brilho, ideal para ocasiões especiais.', 299.99, 3),
-('Tênis Branco', 'Tênis branco casual e confortável, com design moderno e solado antiderrapante, ideal para o dia a dia.', 199.99, 4),
-('Camisa Xadrez', 'Camisa casual xadrez, perfeita para um estilo descontraído, feita de flanela macia e aconchegante.', 89.99, 1),
-('Calça Esportiva', 'Calça esportiva de alta performance, feita com tecido respirável e elástico, ideal para atividades físicas.', 139.99, 2),
-('Vestido Midi', 'Vestido midi elegante, com corte evasê e tecido fluido, perfeito para eventos sociais e ocasiões especiais.', 189.99, 3),
-('Mocassim Marrom', 'Mocassim marrom, feito em couro, com design clássico e confortável, ideal para um look casual chic.', 229.99, 4);
+('Camisa Polo Azul', 'Camisa polo azul de alta qualidade, confeccionada em algodao premium, ideal para um look casual e elegante.', 79.99, 1),
+('Calca Jeans', 'Calca jeans confortavel e resistente, com corte moderno e detalhes em lavagem clara, perfeita para o dia a dia.', 129.99, 2),
+('Vestido Florido', 'Vestido florido ideal para o verao, feito de tecido leve e arejado, proporcionando conforto e estilo.', 149.99, 3),
+('Sapato Social Preto', 'Sapato social preto, ideal para eventos formais, confeccionado em couro legitimo com acabamento refinado.', 249.99, 4),
+('Camisa Social Branca', 'Camisa social branca para o trabalho, feita em tecido de algodao de alta qualidade, oferecendo conforto e sofisticacao.', 99.99, 1),
+('Calca de Sarja', 'Calca de sarja para um look casual, com ajuste perfeito e tecido duravel, disponivel em varias cores.', 119.99, 2),
+('Vestido de Festa', 'Vestido de festa deslumbrante, com detalhes em renda e brilho, ideal para ocasioes especiais.', 299.99, 3),
+('Tenis Branco', 'Tenis branco casual e confortavel, com design moderno e solado antiderrapante, ideal para o dia a dia.', 199.99, 4),
+('Camisa Xadrez', 'Camisa casual xadrez, perfeita para um estilo descontraido, feita de flanela macia e aconchegante.', 89.99, 1),
+('Calca Esportiva', 'Calca esportiva de alta performance, feita com tecido respiravel e elastico, ideal para atividades fisicas.', 139.99, 2),
+('Vestido Midi', 'Vestido midi elegante, com corte evase e tecido fluido, perfeito para eventos sociais e ocasioes especiais.', 189.99, 3),
+('Mocassim Marrom', 'Mocassim marrom, feito em couro, com design classico e confortavel, ideal para um look casual chic.', 229.99, 4);
 
 INSERT INTO products_images (url, product_id) VALUES 
 ('https://www.jardelatacadao.com.br/lojas/00050181/prod/camisa_polo_50_algodao_50_dry_tradicional_jardel_azul_royal_jardel_atacadao_000041B.jpg', 1),
@@ -157,7 +153,6 @@ INSERT INTO products_colors (color, product_id) VALUES
 ('Preto', 7),
 ('Azul', 7);
 
--- yyyy-mm-dd hh:mm:ss
 INSERT INTO orders (total, created_at) VALUES
 (100, '2024-03-10 10:30:00'),
 (100, '2024-05-10 10:30:00');
@@ -180,11 +175,3 @@ INSERT INTO related_products (product_id, related_product_id) VALUES
 (2, 3),
 (3, 1),
 (3, 2);
-
--- orders 
--- 
-
--- order item
--- 2 camisas brancas 
--- 3 camisas pretas
--- 1 calça jeans
