@@ -36,14 +36,6 @@ CREATE TABLE categories (
   description VARCHAR(250) NOT NULL
 );
 
-CREATE TABLE subcategories (
-  category_id INT,
-  subcategory_id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(250) NOT NULL,
-  description VARCHAR(250) NOT NULL,
-  FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
-);
-
 CREATE TABLE products (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(250) NOT NULL,
@@ -116,10 +108,6 @@ INSERT INTO categories (name, description) VALUES
 ('Calça', 'Calças confortáveis e elegantes para o dia a dia, proporcionando um visual leve e moderno'),
 ('Vestido', 'Vestidos elegantes e casuais para todas as ocasiões. É a escolha perfeita para quem busca sofisticação e conforto em uma única peça..'),
 ('Sapato', 'Sapatos variados, desde casuais até formais. É a combinação perfeita de elegância, conforto e durabilidade..');
-
-INSERT INTO Subcategories (category_id, name, description) VALUES
-(4, 'Tênis', 'Tênis casuais e confortáveis para o dia a dia, com design moderno e materiais de alta qualidade.'),
-(4, 'Sandália', 'Sandálias elegantes e confortáveis para diversas ocasiões, disponíveis em diferentes estilos e materiais.');
 
 INSERT INTO products (name, description, price, category_id) VALUES
 ('Camisa Polo Azul', 'Camisa polo azul de alta qualidade, confeccionada em algodão premium, ideal para um look casual e elegante.', 79.99, 1),
