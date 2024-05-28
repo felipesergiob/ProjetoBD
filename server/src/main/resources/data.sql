@@ -149,25 +149,6 @@ INSERT INTO products_colors (color, product_id) VALUES
 ('Preto', 7),
 ('Azul', 7);
 
--- INSERT INTO products (name, description, price, category_id) VALUES
--- ('Calça Brança', 'Melhor calça preta do mercado', 249.99, 1),
--- ('Camisa Preta', 'Melhor camisa básica do mercado', 99.99, 2),
--- ('Jaqueta verde', 'Melhor jaqueta do mercado', 150.00, 3),
--- ('Camisa Branca', 'Melhor jaqueta do mercado', 25.00, 3),
--- ('Camisa Testes', 'Melhor jaqueta do mercado', 25.00, 3);
-
--- INSERT INTO products_images (url, product_id) VALUES 
--- ('https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 1),
--- ('https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 1),
--- ('https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=2797&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 2),
--- ('https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=2797&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 3),
--- ('https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=2797&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 4),
--- ('https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=2797&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 5);
-
--- INSERT INTO products_colors (color, product_id) VALUES
--- ('Branco', 1),
--- ('Preto', 1);
-
 -- yyyy-mm-dd hh:mm:ss
 INSERT INTO orders (total, created_at) VALUES
 (100, '2024-03-10 10:30:00'),
@@ -183,8 +164,3 @@ INSERT INTO orders_items (product_id, order_id, user_id, quantity) VALUES
 (2, 1, 1, 2),
 (1, 2, 1, 1),
 (1, 2, 1, 1);
-
--- INSERT INTO orders_items (product_id, order_id, quantity) VALUES 
--- (1, 1, 1),
--- (2, 1, 1),
--- (2, 2, 1);
