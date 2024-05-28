@@ -63,7 +63,6 @@ export function ProductActions() {
         form.setValue('categoryId', String(response.data.categoryId))
         form.setValue('images', response.data.images.join(', '))
         form.setValue('colors', response.data.images.join(', '))
-        console.log(response.data)
       })
     }
   }, [form, productId])
@@ -154,6 +153,7 @@ export function ProductActions() {
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  value={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
