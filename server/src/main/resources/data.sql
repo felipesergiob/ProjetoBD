@@ -85,6 +85,14 @@ CREATE TABLE favorites (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE related_products (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT,
+    related_product_id INT,
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (related_product_id) REFERENCES products(id)
+);
+
 INSERT INTO users (name, password, email, role) VALUES
 ('Edmar', 'teste123', 'edmar@gmail.com', 'ADMIN'),
 ('Gabriel', 'teste123', 'gabriel@gmail.com', 'USER'),
@@ -164,6 +172,14 @@ INSERT INTO orders_items (product_id, order_id, user_id, quantity) VALUES
 (2, 1, 1, 2),
 (1, 2, 1, 1),
 (1, 2, 1, 1);
+
+INSERT INTO related_products (product_id, related_product_id) VALUES
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 3),
+(3, 1),
+(3, 2);
 
 -- orders 
 -- 
