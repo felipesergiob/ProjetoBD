@@ -6,12 +6,20 @@ import { Button } from '@/components/ui/button'
 import { useCart } from '@/hooks/use-cart'
 import { useProduct } from '@/hooks/use-product'
 import { formatMoney } from '@/utils/format'
+import { useEffect, useState } from 'react'
 
 export function Product() {
   const params = useParams<{ id: string }>()
   const addItemToCart = useCart(item => item.addItemToCart)
+  const [image, setImage] = useState('')
 
   const { data: product } = useProduct(params.id ?? '')
+
+  useEffect(() => {
+    if (product) {
+      setImage(product?.images[0])
+    }
+  }, [product])
 
   if (!product) {
     return <div>Carregando...</div>
@@ -25,11 +33,21 @@ export function Product() {
         <Link to={`/products/${params.id}`}>{product.name}</Link>
       </div>
       <div className="grid grid-cols-2 gap-8">
-        <img
-          src={product.images[0]}
-          alt={product.name}
-          className="w-full h-[400px] rounded-lg object-contain bg-slate-50"
-        />
+        <div className="flex flex-col gap-4">
+          <img
+            src={image ?? product.images[0]}
+            alt={product.name}
+            className="w-full h-[400px] rounded-lg object-contain bg-slate-50"
+          />
+
+          <div className="flex flex-wrap gap-4">
+            {product.images.map(item => (
+              <button onClick={() => setImage(item)} key={item}>
+                <img src={item} className="w-12 h-12 rounded-md" alt="" />
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">

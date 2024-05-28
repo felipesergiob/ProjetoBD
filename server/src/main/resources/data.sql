@@ -164,3 +164,11 @@ INSERT INTO orders_items (product_id, order_id, user_id, quantity) VALUES
 (2, 1, 1, 2),
 (1, 2, 1, 1),
 (1, 2, 1, 1);
+
+-- orders 
+-- 
+
+-- order item
+-- 2 camisas brancas 
+-- 3 camisas pretas
+-- 1 calça jeans

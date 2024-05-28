@@ -45,7 +45,7 @@ public class StatsRepository {
           DATE_FORMAT(created_at, '%Y-%m')
       ORDER BY
           month;
-    """;
+    """;    
 
     return jdbcTemplate.query(sql, (rs, rowNum) -> {
       MonthlyStatsDTO monthlyStatsDTO = new MonthlyStatsDTO();

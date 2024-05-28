@@ -1,9 +1,11 @@
 import { ProductCard } from '@/components/product-card'
 import { ProductSkeleton } from '@/components/product-skeleton'
 import { useFavorites } from '@/hooks/use-favorites'
+import { useProducts } from '@/hooks/use-products'
 
 export function Favorites() {
   const { data: products } = useFavorites()
+  const { data: productsOi } = useProducts()
 
   return (
     <div className="max-w-6xl mx-auto px-4 my-8 flex flex-col gap-24">
@@ -22,7 +24,10 @@ export function Favorites() {
                   key={product.id}
                   id={product.id}
                   description={product.description}
-                  images={product.images ?? ''}
+                  images={
+                    productsOi?.find(item => item.id === product.id)?.images ??
+                    []
+                  }
                   name={product.name}
                   price={product.price}
                   colors={product.colors}

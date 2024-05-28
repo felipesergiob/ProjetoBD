@@ -45,7 +45,9 @@ export function Orders() {
             <header className="p-4 border-b border-border flex items-center gap-12">
               <div className="flex flex-col gap-2">
                 <span className="">Número do pedido</span>
-                <small className="text-sm text-muted-foreground">1</small>
+                <small className="text-sm text-muted-foreground">
+                  {order.id}
+                </small>
               </div>
               <div className="flex flex-col gap-2">
                 <span className="">Data de Criação</span>

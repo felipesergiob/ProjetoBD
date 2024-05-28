@@ -70,6 +70,8 @@ export function ProductActions() {
 
   const title = productId ? 'Editar ' + form.getValues().name : 'Criar Produto'
 
+  console.log(form.watch())
+
   async function onSubmit(values: FormInput) {
     const formattedValues = {
       ...values,

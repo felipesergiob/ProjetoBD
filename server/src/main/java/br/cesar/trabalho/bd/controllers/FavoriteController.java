@@ -33,8 +33,7 @@ public class FavoriteController {
   public ResponseEntity<Object> create(@RequestBody FavoriteProductDTO body) {
     Optional<Favorite> favorite = favoriteRepository.findByUserIdAndProductId(body.getProductId(), body.getUserId());
 
-    System.out.println(favorite);
-
+    // se existir favorito, deleta, se não existir cria um
     if (favorite.isPresent()) {
       favoriteRepository.delete(favorite.get().getId());
       return ResponseEntity.ok().build();
