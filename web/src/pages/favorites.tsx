@@ -25,6 +25,7 @@ export function Favorites() {
                   images={product.images ?? ''}
                   name={product.name}
                   price={product.price}
+                  colors={product.colors}
                 />
               ))}
         </div>

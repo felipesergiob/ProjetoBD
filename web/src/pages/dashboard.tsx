@@ -10,7 +10,7 @@ import {
 import { useProducts } from '@/hooks/use-products'
 import { useStats } from '@/hooks/use-stats'
 import { formatMoney } from '@/utils/format'
-import { Pen, Trash } from 'lucide-react'
+import { Pen } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import {
   ResponsiveContainer,
@@ -110,9 +110,6 @@ export function Dashboard() {
                   <TableCell>{formatMoney(product.price)}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1 items-center">
-                      <Button variant="outline">
-                        <Trash className="w-4 h-4" />
-                      </Button>
                       <Button asChild variant="outline">
                         <Link to={`/product-actions?productId=${product.id}`}>
                           <Pen className="w-4 h-4" />

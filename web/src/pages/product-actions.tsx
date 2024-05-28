@@ -33,7 +33,8 @@ const formSchema = z.object({
     .number({ required_error: 'Preço é obrigatório' })
     .min(1, { message: 'Preço é obrigatório' }),
   categoryId: z.string().min(1, { message: 'Categoria é obrigatória' }),
-  images: z.string().min(1, { message: 'Imagens são obrigatórias' })
+  images: z.string().min(1, { message: 'Imagens são obrigatórias' }),
+  colors: z.string()
 })
 
 type FormInput = z.infer<typeof formSchema>
@@ -59,8 +60,9 @@ export function ProductActions() {
         form.setValue('name', response.data.name)
         form.setValue('description', response.data.description)
         form.setValue('price', response.data.price)
-        form.setValue('categoryId', response.data.categoryId.toString())
+        form.setValue('categoryId', String(response.data.categoryId))
         form.setValue('images', response.data.images.join(', '))
+        form.setValue('colors', response.data.images.join(', '))
         console.log(response.data)
       })
     }
@@ -72,7 +74,8 @@ export function ProductActions() {
     const formattedValues = {
       ...values,
       categoryId: Number(values.categoryId),
-      images: values.images.split(', ')
+      images: values.images.split(', '),
+      colors: values.colors.split(', ')
     }
 
     try {
@@ -83,6 +86,7 @@ export function ProductActions() {
 
         toast.success('Produto criado com sucesso')
       } else {
+        console.log('oi')
         await api.put(`/products/${productId}`, {
           ...formattedValues
         })
@@ -105,7 +109,7 @@ export function ProductActions() {
     <div className="mx-auto max-w-4xl my-8 px-4 w-full flex flex-col gap-8">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-medium">{title}</h1>
-        {productId && 'Não é possível editar as imagens'}
+        {productId && 'Não é possível editar as imagens e cores'}
       </div>
 
       <Form {...form}>
@@ -196,6 +200,25 @@ export function ProductActions() {
                   <FormDescription>
                     As imagens devem ser separadas por uma vírgula:
                     https://imagem1, https://imagem2
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+          )}
+          {!productId && (
+            <FormField
+              control={form.control}
+              name="colors"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cores</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                  <FormDescription>
+                    As cores devem ser separadas por uma vírgula: Branco,
+                    Vermelho
                   </FormDescription>
                 </FormItem>
               )}

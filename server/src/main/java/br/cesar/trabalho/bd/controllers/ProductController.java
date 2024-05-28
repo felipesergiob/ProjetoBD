@@ -54,6 +54,10 @@ public class ProductController {
       productRepository.createImage(url, productId);
     }
 
+    for (String color : productDTO.getColors()) {
+      productRepository.createColor(color, productId);
+    }
+
     return ResponseEntity.status(201).build();
   }
 

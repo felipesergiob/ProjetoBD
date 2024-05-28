@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Heart } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -17,6 +17,7 @@ type ProductCardProps = {
   description: string
   price: number
   images: string[]
+  colors: string[] | null
 }
 
 export function ProductCard({
@@ -24,12 +25,14 @@ export function ProductCard({
   id,
   name,
   price,
-  images
+  images,
+  colors
 }: ProductCardProps) {
   const addItemToCart = useCart(state => state.addItemToCart)
   const { userInfo } = useAuth()
   const queryClient = useQueryClient()
   const { data: products } = useFavorites()
+  const navigate = useNavigate()
 
   const favorites = products ? products.map(item => item.id) : []
 
@@ -51,10 +54,12 @@ export function ProductCard({
 
   return (
     <div className="rounded-md overflow-hidden">
-      <Link
-        onClick={event => event.preventDefault()}
-        to={`/products/${id}`}
-        className="group"
+      <button
+        onClick={event => {
+          event.stopPropagation()
+          navigate(`/products/${id}`)
+        }}
+        className="group w-full"
       >
         <div className="relative z-50 w-full h-96">
           <img
@@ -63,9 +68,11 @@ export function ProductCard({
             className="w-full h-96 group-hover:opacity-60 transition-all absolute"
           />
           <Button
-            onClick={() => {
+            onClick={event => {
+              event.stopPropagation()
               favoriteProductMutation.mutateAsync()
             }}
+            type="button"
             size="sm"
             variant="outline"
             className="absolute top-4 right-4 z-50"
@@ -78,13 +85,17 @@ export function ProductCard({
           </Button>
         </div>
         <div className="flex justify-between items-start mt-2">
-          <div>
+          <div className="text-start">
             <h3 className="text-lg font-semibold">{name}</h3>
             <span className="text-sm text-muted-foreground">{description}</span>
+
+            {colors && colors.length > 0 && (
+              <span>Cores: {colors.join(', ')}</span>
+            )}
           </div>
           <strong>{formatMoney(price)}</strong>
         </div>
-      </Link>
+      </button>
       <Button
         className="mt-6 w-full"
         onClick={() => {

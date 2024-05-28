@@ -11,7 +11,8 @@ BEGIN
         'description', p.description,
         'price', p.price,
         'category_id', p.category_id,
-        'images', (SELECT JSON_ARRAYAGG(i.url) FROM products_images i WHERE i.product_id = product_id)
+        'images', (SELECT JSON_ARRAYAGG(i.url) FROM products_images i WHERE i.product_id = product_id),
+        'colors', (SELECT JSON_ARRAYAGG(i.color) FROM products_colors i WHERE i.product_id = product_id)
     )
     INTO @result
     FROM products p

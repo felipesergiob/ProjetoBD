@@ -1,6 +1,6 @@
 Obrigatório:
 - Composto: OK
-- Multivalorado: (?)
+- Multivalorado: OK
 - Cardinalidade diversas: OK
 - Atributo de relacionamento: OK
 - Auto relacionamento: (?)
@@ -13,7 +13,7 @@ Obrigatório:
 Extra:
 - Check: 
 - Default: OK
-- Unique:
+- Unique: OK
 
 Dúvidas:
 

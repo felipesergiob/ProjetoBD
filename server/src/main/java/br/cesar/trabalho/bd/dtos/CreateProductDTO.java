@@ -12,4 +12,5 @@ public class CreateProductDTO {
   private BigDecimal price;
   private Integer categoryId;
   private List<String> images;
+  private List<String> colors;
 }

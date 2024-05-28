@@ -40,6 +40,12 @@ export function Product() {
             </strong>
           </div>
 
+          {product.colors && product.colors.length > 0 && (
+            <span className="text-sm text-gray-600">
+              Cores: {product.colors.join(', ')}
+            </span>
+          )}
+
           <p className="text-muted-foreground">{product.description}</p>
 
           <Button

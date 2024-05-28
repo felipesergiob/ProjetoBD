@@ -5,4 +5,5 @@ export interface IProduct {
   images: string[]
   categoryId: number
   price: number
+  colors: string[] | null
 }

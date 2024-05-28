@@ -14,4 +14,5 @@ public class Product {
   private Integer categoryId;
 
   private List<String> images;
+  private List<String> colors;
 }

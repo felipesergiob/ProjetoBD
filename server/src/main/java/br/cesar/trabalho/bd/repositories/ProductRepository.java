@@ -55,6 +55,12 @@ public class ProductRepository {
     jdbcTemplate.update(sql, image, productId);
   }
 
+  public void createColor(String color, Integer productId) {
+    String sql = "INSERT INTO products_colors (color, product_id) VALUES (?, ?)";
+
+    jdbcTemplate.update(sql, color, productId);
+  }
+
   public void update(CreateProductDTO productDTO, Integer productId) {
     String sql = "UPDATE products SET name = ?, description = ?, price = ?, category_id = ? WHERE id = ?";
 
@@ -93,7 +99,7 @@ public class ProductRepository {
         preparedStatement.setInt(1, categoryId);
         return preparedStatement;
       }
-    }, new ProductRowMapper());
+    }, new ProductRowMapperNoColor());
 
     return products;
   }
@@ -132,7 +138,43 @@ public class ProductRepository {
         }
         product.setImages(images);
 
+        try {
+          
+          JSONArray colorsArray = jsonObject.getJSONArray("colors");
+
+          if (colorsArray != null) {
+            List<String> colors = new ArrayList<>();
+            for (int i = 0; i < colorsArray.length(); i++) {
+                colors.add(colorsArray.getString(i));
+            }
+            product.setColors(colors);
+          }
+        } catch (Exception e) {
+          // TODO: handle exception
+        }
+
         return product;
+    }
+  }
+  
+  private static class ProductRowMapperNoColor implements RowMapper<Product> {
+    @Override
+    public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
+      Product product = new Product();
+      product.setName(rs.getString("name"));
+      product.setCategoryId(rs.getInt("category_id"));
+      product.setDescription(rs.getString("description"));
+      product.setPrice(rs.getBigDecimal("price"));
+      product.setId(rs.getInt("id"));
+
+      String imagesConcatenated = rs.getString("images");
+      if (imagesConcatenated != null) {
+          String[] imagesArray = imagesConcatenated.split(",");
+          List<String> imagesList = Arrays.asList(imagesArray);
+          product.setImages(imagesList); 
+      }
+
+      return product;
     }
   }
 }

@@ -13,7 +13,23 @@ export function Home() {
 
   return (
     <>
-      <div className="bg-primary h-[600px] w-full"></div>
+      <div className="bg-primary h-[600px] w-full flex items-center">
+        <div className="max-w-6xl grid grid-cols-2 items-center justify-center gap-8 mx-auto">
+          <div className="flex flex-col gap-8 text-white">
+            <h1 className="text-5xl">MELHORES PRODUTOS DO MERCADO</h1>
+            <span className="text-muted-foreground">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Laboriosam ipsa, enim consequuntur doloribus inventore sint quia
+              sit, deserunt repudiandae aperiam repellendus numquam minus natus
+              labore facilis nihil iusto vero placeat!
+            </span>
+          </div>
+          <img
+            className="w-full h-96"
+            src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTN8WRdNp-v28S2xyUpTtyr7ACqFDTczqDRQYgI0Kb-RzW5oI8yps-wku8KCQ4dHUMbhyPChjA55SLFjmOWeLceRijfeuSmeNrbl5DrLoOM7wSSX9LxR3NiKQ&usqp=CAE%27"
+          />
+        </div>
+      </div>
 
       <div className="max-w-6xl mx-auto px-4 my-24 flex flex-col gap-24">
         <Section title="Categorias">
@@ -62,6 +78,7 @@ export function Home() {
                     images={product.images}
                     name={product.name}
                     price={product.price}
+                    colors={product.colors}
                   />
                 ))}
           </div>
