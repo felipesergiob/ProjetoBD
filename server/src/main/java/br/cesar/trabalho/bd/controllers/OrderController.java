@@ -67,8 +67,6 @@ public class OrderController {
       createAddressDTO.setStreet(body.getStreet());
       createAddressDTO.setUserId(body.getUserId());
 
-      System.out.println(createAddressDTO);
-      
       userAddressRepository.create(createAddressDTO);
     }
 

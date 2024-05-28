@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS orders_items;
 DROP TABLE IF EXISTS favorites;
+DROP TABLE IF EXISTS products_colors;
 SET FOREIGN_KEY_CHECKS = 1; 
 
 CREATE TABLE users (
